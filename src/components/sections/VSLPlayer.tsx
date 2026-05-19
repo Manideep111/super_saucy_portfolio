@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { useRef, useState } from "react";
 import { cn } from "@/lib/cn";
@@ -16,7 +17,7 @@ export function VSLPlayer() {
   };
 
   return (
-    <section className="relative flex justify-center px-6 pb-32">
+    <section id="vsl" className="relative flex justify-center px-6 pb-16 md:pb-24 lg:pb-32">
       <style>{`
         @keyframes vslBorderPulse {
           0%, 100% {
@@ -46,7 +47,13 @@ export function VSLPlayer() {
         .vsl-ring { animation: vslRingPulse 2.2s ease-out infinite; }
       `}</style>
 
-      <div className="relative w-full max-w-[1000px]">
+      <motion.div
+        initial={{ opacity: 0, y: 32 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-80px" }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+        className="relative w-full max-w-[1000px]"
+      >
         {/* underglow reflection */}
         <div
           aria-hidden
@@ -124,7 +131,7 @@ export function VSLPlayer() {
             </>
           ) : null}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

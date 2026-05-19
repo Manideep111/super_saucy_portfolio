@@ -51,7 +51,7 @@ const item = {
 
 export function Testimonials() {
   return (
-    <section id="testimonials" className="relative px-6 py-32">
+    <section id="testimonials" className="relative px-6 py-16 md:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl">
         <motion.div
           initial="hidden"

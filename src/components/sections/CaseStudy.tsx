@@ -23,7 +23,7 @@ const item = {
 
 export function CaseStudy() {
   return (
-    <section id="case-study" className="relative px-6 py-32">
+    <section id="case-study" className="relative px-6 py-16 md:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl">
         <motion.div
           initial="hidden"

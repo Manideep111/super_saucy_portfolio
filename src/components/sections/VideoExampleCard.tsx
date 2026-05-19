@@ -102,12 +102,13 @@ export function VideoExampleCard({ example }: Props) {
       onFocus={() => setHovered(true)}
       onBlur={() => setHovered(false)}
       className={cn(
-        "group relative overflow-hidden rounded-2xl border border-white/[0.08]",
+        "group relative cursor-pointer overflow-hidden rounded-2xl border border-white/[0.08]",
         "aspect-square sm:aspect-[4/5] lg:aspect-[9/16]",
         "bg-surface/40 backdrop-blur-xl",
         "transition-all duration-500 ease-out will-change-transform",
         "hover:scale-[1.03] hover:border-primary/40 hover:shadow-glow-md",
         "focus-within:scale-[1.03] focus-within:border-primary/40 focus-within:shadow-glow-md",
+        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
       )}
       tabIndex={0}
     >

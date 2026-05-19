@@ -85,9 +85,9 @@ export function Navigation() {
               onClick={() => setOpen(true)}
               aria-label="Open menu"
               className={cn(
-                "ml-auto md:hidden inline-flex h-9 w-9 items-center justify-center rounded-full",
+                "ml-auto md:hidden inline-flex h-9 w-9 cursor-pointer items-center justify-center rounded-full",
                 "border border-white/[0.08] text-white",
-                "hover:bg-white/[0.06] transition-colors",
+                "hover:bg-white/[0.06] transition-colors duration-300",
               )}
             >
               <Menu className="h-4 w-4" />
@@ -137,7 +137,7 @@ export function Navigation() {
                   type="button"
                   onClick={() => setOpen(false)}
                   aria-label="Close menu"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/[0.08] text-white hover:bg-white/[0.06]"
+                  className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-white/[0.08] text-white transition-colors duration-300 hover:bg-white/[0.06]"
                 >
                   <X className="h-5 w-5" />
                 </button>

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { BackgroundLayer } from "@/components/effects/BackgroundLayer";
 import "./globals.css";
@@ -15,10 +15,59 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
+const SITE_URL = "https://example.com";
+const SITE_NAME = "Lumen";
+const TITLE = "YOUR NAME — Video Editor";
+const DESCRIPTION =
+  "Premium video editing for creators, founders, and agencies who want to stop losing viewers in the first 3 seconds.";
+
+export const viewport: Viewport = {
+  themeColor: "#0a0612",
+  colorScheme: "dark",
+};
+
 export const metadata: Metadata = {
-  title: "YOUR NAME — Video Editor",
-  description:
-    "Cinematic edits, motion design, and storytelling for creators and brands.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: TITLE,
+    template: `%s — ${SITE_NAME}`,
+  },
+  description: DESCRIPTION,
+  applicationName: SITE_NAME,
+  keywords: [
+    "video editing",
+    "video editor portfolio",
+    "YouTube editor",
+    "short-form video",
+    "brand video",
+    "content strategy",
+  ],
+  authors: [{ name: "Your Name" }],
+  creator: "Your Name",
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    creator: "@yourhandle",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({

@@ -1,11 +1,14 @@
 "use client";
 
+import { useReducedMotion } from "framer-motion";
 import { AuroraGlow } from "./AuroraGlow";
 import { MouseRipple } from "./MouseRipple";
 import { SparkleField } from "./SparkleField";
 import { StarfieldBackground } from "./StarfieldBackground";
 
 export function BackgroundLayer() {
+  const prefersReducedMotion = useReducedMotion();
+
   return (
     <div
       aria-hidden
@@ -13,8 +16,12 @@ export function BackgroundLayer() {
     >
       <AuroraGlow />
       <StarfieldBackground />
-      <SparkleField />
-      <MouseRipple />
+      {prefersReducedMotion ? null : (
+        <>
+          <SparkleField />
+          <MouseRipple />
+        </>
+      )}
     </div>
   );
 }

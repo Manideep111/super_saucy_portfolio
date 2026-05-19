@@ -109,7 +109,7 @@ export function VideoExamples() {
   );
 
   return (
-    <section id="work" className="relative px-6 py-32">
+    <section id="work" className="relative px-6 py-16 md:py-24 lg:py-32">
       <div className="mx-auto max-w-6xl">
         <motion.div
           initial="hidden"
@@ -145,7 +145,7 @@ export function VideoExamples() {
                 type="button"
                 onClick={() => setFilter(f.id)}
                 className={cn(
-                  "rounded-full px-4 py-2 text-sm font-medium transition-all",
+                  "cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
                   "border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
                   active
                     ? "bg-gradient-primary border-transparent text-white shadow-glow-sm"

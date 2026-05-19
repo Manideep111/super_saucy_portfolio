@@ -26,7 +26,7 @@ export function HeroOffer() {
   return (
     <section
       id="hero"
-      className="relative isolate flex flex-col items-center px-6 pt-40 pb-24 md:pt-48 md:pb-32"
+      className="relative isolate flex flex-col items-center px-6 pt-32 pb-16 md:pt-44 md:pb-24 lg:pt-48 lg:pb-32"
     >
       <div
         aria-hidden
