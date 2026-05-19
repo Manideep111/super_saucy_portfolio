@@ -3,11 +3,13 @@
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import { useRef, useState } from "react";
+import { CursorTrail } from "@/components/effects/CursorTrail";
 import { cn } from "@/lib/cn";
 
 export function VSLPlayer() {
   const [playing, setPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
 
   const handlePlay = () => {
     const v = videoRef.current;
@@ -66,12 +68,14 @@ export function VSLPlayer() {
         />
 
         <div
+          ref={cardRef}
           className={cn(
             "vsl-card group relative aspect-video w-full overflow-hidden rounded-3xl",
             "bg-gradient-to-br from-[#1a0d33] via-[#0d0818] to-[#2a0f3d]",
             "transition-transform duration-500 ease-out will-change-transform",
           )}
         >
+          <CursorTrail containerRef={cardRef} enabled={!playing} />
           <video
             ref={videoRef}
             className={cn(

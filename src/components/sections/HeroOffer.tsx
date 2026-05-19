@@ -3,7 +3,9 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight, Play } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { Magnetic } from "@/components/ui/Magnetic";
 import { Pill } from "@/components/ui/Pill";
+import { TextScramble } from "@/components/ui/TextScramble";
 import { SparkleField } from "@/components/effects/SparkleField";
 
 const container = {
@@ -56,7 +58,11 @@ export function HeroOffer() {
           variants={item}
           className="text-gradient mt-7 max-w-[18ch] font-display text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl"
         >
-          Your Story. Edited Into Something Unforgettable.
+          <TextScramble
+            text="Your Story. Edited Into Something Unforgettable."
+            duration={700}
+            scrambleClassName="text-primary-light"
+          />
         </motion.h1>
 
         <motion.p
@@ -71,13 +77,15 @@ export function HeroOffer() {
           variants={item}
           className="mt-10 flex flex-col items-center gap-3 sm:flex-row"
         >
-          <Button
-            variant="primary"
-            size="lg"
-            rightIcon={<ArrowUpRight className="h-4 w-4" />}
-          >
-            Book a Call
-          </Button>
+          <Magnetic>
+            <Button
+              variant="primary"
+              size="lg"
+              rightIcon={<ArrowUpRight className="h-4 w-4" />}
+            >
+              Book a Call
+            </Button>
+          </Magnetic>
           <Button
             variant="secondary"
             size="lg"

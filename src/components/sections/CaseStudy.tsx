@@ -1,16 +1,73 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { ArrowRight } from "lucide-react";
+import { useRef } from "react";
 import { Button } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { cn } from "@/lib/cn";
+import { useCountUp } from "@/lib/useCountUp";
 
-const METRICS = [
-  { value: "340%", label: "Engagement increase" },
-  { value: "12M+", label: "Views generated" },
-  { value: "48hr", label: "Avg. turnaround" },
+type Metric = {
+  end: number;
+  prefix?: string;
+  suffix: string;
+  label: string;
+};
+
+const METRICS: Metric[] = [
+  { end: 340, suffix: "%", label: "Engagement increase" },
+  { end: 12, suffix: "M+", label: "Views generated" },
+  { end: 48, suffix: "hr", label: "Avg. turnaround" },
 ];
+
+function MetricValue({
+  metric,
+  active,
+}: {
+  metric: Metric;
+  active: boolean;
+}) {
+  const value = useCountUp({
+    end: metric.end,
+    duration: 1500,
+    active,
+  });
+  return (
+    <div className="text-gradient font-display text-3xl font-semibold leading-none md:text-4xl">
+      {metric.prefix}
+      {Math.round(value)}
+      {metric.suffix}
+    </div>
+  );
+}
+
+function MetricsRow() {
+  const rowRef = useRef<HTMLUListElement | null>(null);
+  const inView = useInView(rowRef, { once: true, margin: "-80px" });
+  return (
+    <ul
+      ref={rowRef}
+      className="mt-10 grid grid-cols-3 gap-3 md:gap-5"
+    >
+      {METRICS.map((m) => (
+        <li
+          key={m.label}
+          className={cn(
+            "rounded-2xl border border-white/[0.08] bg-surface/40 backdrop-blur-xl",
+            "px-4 py-5 md:px-5 md:py-6",
+            "transition-colors duration-300 hover:border-primary/40",
+          )}
+        >
+          <MetricValue metric={m} active={inView} />
+          <div className="mt-2 text-xs leading-snug text-text-muted md:text-sm">
+            {m.label}
+          </div>
+        </li>
+      ))}
+    </ul>
+  );
+}
 
 const item = {
   hidden: { opacity: 0, y: 24 },
@@ -152,25 +209,8 @@ export function CaseStudy() {
               </p>
             </div>
 
-            <ul className="mt-10 grid grid-cols-3 gap-3 md:gap-5">
-              {METRICS.map((m) => (
-                <li
-                  key={m.label}
-                  className={cn(
-                    "rounded-2xl border border-white/[0.08] bg-surface/40 backdrop-blur-xl",
-                    "px-4 py-5 md:px-5 md:py-6",
-                    "transition-colors hover:border-primary/40",
-                  )}
-                >
-                  <div className="text-gradient font-display text-3xl font-semibold leading-none md:text-4xl">
-                    {m.value}
-                  </div>
-                  <div className="mt-2 text-xs leading-snug text-text-muted md:text-sm">
-                    {m.label}
-                  </div>
-                </li>
-              ))}
-            </ul>
+            <MetricsRow />
+
 
             <div className="mt-10">
               <Button

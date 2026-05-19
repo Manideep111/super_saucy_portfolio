@@ -4,6 +4,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
 import { Button } from "@/components/ui/Button";
+import { Magnetic } from "@/components/ui/Magnetic";
 import { SparkleField } from "@/components/effects/SparkleField";
 
 const fade = {
@@ -121,14 +122,16 @@ export function FinalCTA() {
             about your vision.
           </motion.p>
           <motion.div variants={fade} className="mt-10">
-            <Button
-              variant="primary"
-              size="lg"
-              rightIcon={<ArrowRight className="h-5 w-5" />}
-              className="px-10 hover:shadow-glow-lg"
-            >
-              Book Your Call
-            </Button>
+            <Magnetic range={140} strength={0.3} max={14}>
+              <Button
+                variant="primary"
+                size="lg"
+                rightIcon={<ArrowRight className="h-5 w-5" />}
+                className="px-10 hover:shadow-glow-lg"
+              >
+                Book Your Call
+              </Button>
+            </Magnetic>
           </motion.div>
         </motion.div>
       </div>

@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { BackgroundLayer } from "@/components/effects/BackgroundLayer";
+import { PageVeil } from "@/components/effects/PageVeil";
+import { ScrollProgress } from "@/components/effects/ScrollProgress";
 import "./globals.css";
 
 const inter = Inter({
@@ -82,7 +84,9 @@ export default function RootLayout({
     >
       <body className="min-h-full bg-background text-text-primary flex flex-col isolate">
         <BackgroundLayer />
+        <ScrollProgress />
         <div className="relative z-10 flex flex-1 flex-col">{children}</div>
+        <PageVeil />
       </body>
     </html>
   );

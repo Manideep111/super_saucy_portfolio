@@ -5,6 +5,7 @@ import { ArrowUpRight, Menu, Sparkles, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
+import { Magnetic } from "@/components/ui/Magnetic";
 import { cn } from "@/lib/cn";
 
 const NAV_LINKS = [
@@ -94,14 +95,15 @@ export function Navigation() {
             </button>
           </motion.nav>
 
-          <Button
-            size="md"
-            variant="primary"
-            rightIcon={<ArrowUpRight className="h-4 w-4" />}
-            className="hidden md:inline-flex shrink-0"
-          >
-            Book a Call
-          </Button>
+          <Magnetic className="hidden md:inline-block shrink-0">
+            <Button
+              size="md"
+              variant="primary"
+              rightIcon={<ArrowUpRight className="h-4 w-4" />}
+            >
+              Book a Call
+            </Button>
+          </Magnetic>
         </div>
       </motion.header>
 
