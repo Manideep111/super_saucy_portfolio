@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
+import { BackgroundLayer } from "@/components/effects/BackgroundLayer";
 import "./globals.css";
 
 const inter = Inter({
@@ -30,8 +31,9 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} h-full antialiased`}
     >
-      <body className="min-h-full bg-background text-text-primary flex flex-col">
-        {children}
+      <body className="min-h-full bg-background text-text-primary flex flex-col isolate">
+        <BackgroundLayer />
+        <div className="relative z-10 flex flex-1 flex-col">{children}</div>
       </body>
     </html>
   );
