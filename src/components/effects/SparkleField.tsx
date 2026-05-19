@@ -12,18 +12,29 @@ type Sparkle = {
   duration: number;
 };
 
-const MAX_SPARKLES = 10;
-const SPAWN_MIN = 500;
-const SPAWN_MAX = 800;
+type SparkleFieldProps = {
+  count?: number;
+  spawnMin?: number;
+  spawnMax?: number;
+  sizeMin?: number;
+  sizeMax?: number;
+  mode?: "fixed" | "absolute";
+  className?: string;
+};
+
 const PURPLE = "#c084fc";
 const WHITE = "#ffffff";
 
-function makeSparkle(id: number): Sparkle {
+function makeSparkle(
+  id: number,
+  sizeMin: number,
+  sizeMax: number,
+): Sparkle {
   return {
     id,
     top: `${Math.random() * 100}%`,
     left: `${Math.random() * 100}%`,
-    size: 10 + Math.random() * 16,
+    size: sizeMin + Math.random() * (sizeMax - sizeMin),
     color: Math.random() < 0.55 ? PURPLE : WHITE,
     shape: Math.random() < 0.5 ? "star" : "plus",
     duration: 2.6 + Math.random() * 0.8,
@@ -51,35 +62,57 @@ function SparkleSvg({ shape, color }: { shape: Sparkle["shape"]; color: string }
   );
 }
 
-export function SparkleField() {
+export function SparkleField({
+  count = 10,
+  spawnMin = 500,
+  spawnMax = 800,
+  sizeMin = 10,
+  sizeMax = 26,
+  mode = "fixed",
+  className,
+}: SparkleFieldProps = {}) {
   const [sparkles, setSparkles] = useState<Sparkle[]>([]);
 
   useEffect(() => {
     let nextId = 0;
-    setSparkles(Array.from({ length: MAX_SPARKLES }, () => makeSparkle(nextId++)));
+    let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
-    let timeoutId: ReturnType<typeof setTimeout>;
-    const schedule = () => {
-      const delay = SPAWN_MIN + Math.random() * (SPAWN_MAX - SPAWN_MIN);
-      timeoutId = setTimeout(() => {
-        setSparkles((prev) => {
-          if (prev.length === 0) return prev;
-          // replace the oldest sparkle
-          const [, ...rest] = prev;
-          return [...rest, makeSparkle(nextId++)];
-        });
-        schedule();
-      }, delay);
+    const rafId = requestAnimationFrame(() => {
+      setSparkles(
+        Array.from({ length: count }, () =>
+          makeSparkle(nextId++, sizeMin, sizeMax),
+        ),
+      );
+
+      const schedule = () => {
+        const delay = spawnMin + Math.random() * (spawnMax - spawnMin);
+        timeoutId = setTimeout(() => {
+          setSparkles((prev) => {
+            if (prev.length === 0) return prev;
+            const [, ...rest] = prev;
+            return [...rest, makeSparkle(nextId++, sizeMin, sizeMax)];
+          });
+          schedule();
+        }, delay);
+      };
+      schedule();
+    });
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      if (timeoutId !== null) clearTimeout(timeoutId);
     };
-    schedule();
+  }, [count, spawnMin, spawnMax, sizeMin, sizeMax]);
 
-    return () => clearTimeout(timeoutId);
-  }, []);
+  const positioning =
+    mode === "absolute"
+      ? "pointer-events-none absolute inset-0 overflow-hidden"
+      : "pointer-events-none fixed inset-0 overflow-hidden";
 
   return (
     <div
       aria-hidden
-      className="pointer-events-none fixed inset-0 overflow-hidden"
+      className={[positioning, className].filter(Boolean).join(" ")}
       style={{ zIndex: 0 }}
     >
       <style>{`

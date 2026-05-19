@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo } from "react";
+import { useIsClient } from "@/lib/useIsClient";
 
 type Star = {
   id: number;
@@ -36,9 +37,8 @@ function generateStars(): Star[] {
 }
 
 export function StarfieldBackground() {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-  const stars = useMemo(() => (mounted ? generateStars() : []), [mounted]);
+  const isClient = useIsClient();
+  const stars = useMemo(() => (isClient ? generateStars() : []), [isClient]);
 
   return (
     <div
