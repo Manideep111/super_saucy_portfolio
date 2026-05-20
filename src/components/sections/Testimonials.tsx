@@ -1,42 +1,28 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Star } from "lucide-react";
-import { Card } from "@/components/ui/Card";
 import { Pill } from "@/components/ui/Pill";
+import { cn } from "@/lib/cn";
 
-type Testimonial = {
-  quote: string;
-  name: string;
-  role: string;
-  avatarFrom: string;
-  avatarTo: string;
+type TestimonialImage = {
+  src: string;
+  alt: string;
 };
 
-const TESTIMONIALS: Testimonial[] = [
+// Drop the matching files into /public/images/testimonials/.
+// See public/images/testimonials/README.md for sizing guidance.
+const TESTIMONIAL_IMAGES: TestimonialImage[] = [
   {
-    quote:
-      "Working with Lumen transformed our content strategy. Our engagement is up 340% in just two months.",
-    name: "Sarah Chen",
-    role: "Founder @ Lumen Studios",
-    avatarFrom: "#a855f7",
-    avatarTo: "#c026d3",
+    src: "/images/testimonials/testimonial-1.png",
+    alt: "Client testimonial 1",
   },
   {
-    quote:
-      "Every cut feels intentional. Retention on our YouTube long-forms went from 32% to 58% — the editing did that.",
-    name: "Marcus Holloway",
-    role: "Creator @ Holloway Daily",
-    avatarFrom: "#c084fc",
-    avatarTo: "#7c3aed",
+    src: "/images/testimonials/testimonial-2.png",
+    alt: "Client testimonial 2",
   },
   {
-    quote:
-      "We were drowning in raw footage. Now we ship one polished hero video a week and three shorts. Game changer.",
-    name: "Priya Raman",
-    role: "Head of Content @ Atlas Agency",
-    avatarFrom: "#7c3aed",
-    avatarTo: "#c026d3",
+    src: "/images/testimonials/testimonial-3.png",
+    alt: "Client testimonial 3",
   },
 ];
 
@@ -78,37 +64,34 @@ export function Testimonials() {
           variants={{ visible: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } } }}
           className="mt-16 grid grid-cols-1 gap-6 md:grid-cols-3"
         >
-          {TESTIMONIALS.map((t) => (
-            <motion.li key={t.name} variants={item}>
-              <Card interactive className="h-full p-6 md:p-7">
-                <div className="flex items-center gap-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className="h-4 w-4 fill-primary text-primary"
-                      strokeWidth={0}
-                    />
-                  ))}
-                </div>
-                <blockquote className="mt-5 text-base leading-relaxed text-text-primary">
-                  &ldquo;{t.quote}&rdquo;
-                </blockquote>
-                <div className="mt-7 flex items-center gap-3">
-                  <span
-                    className="inline-block h-10 w-10 shrink-0 rounded-full ring-1 ring-white/10"
-                    style={{
-                      background: `linear-gradient(135deg, ${t.avatarFrom} 0%, ${t.avatarTo} 100%)`,
-                    }}
-                    aria-hidden
-                  />
-                  <div className="flex flex-col">
-                    <span className="text-sm font-medium text-white">
-                      {t.name}
-                    </span>
-                    <span className="text-xs text-text-muted">{t.role}</span>
-                  </div>
-                </div>
-              </Card>
+          {TESTIMONIAL_IMAGES.map((t) => (
+            <motion.li key={t.src} variants={item}>
+              <figure
+                className={cn(
+                  "group relative h-full overflow-hidden rounded-2xl",
+                  "border border-white/[0.08] bg-surface/40 backdrop-blur-xl",
+                  "transition-all duration-300",
+                  "hover:-translate-y-0.5 hover:border-primary/40 hover:shadow-glow-sm",
+                )}
+              >
+                {/* Gradient placeholder so the card still looks themed if
+                    the image is missing during development. */}
+                <div
+                  aria-hidden
+                  className="absolute inset-0"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #1a0d33 0%, #0d0818 60%, #2a0f3d 100%)",
+                  }}
+                />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={t.src}
+                  alt={t.alt}
+                  loading="lazy"
+                  className="relative block aspect-[4/5] w-full object-cover"
+                />
+              </figure>
             </motion.li>
           ))}
         </motion.ul>

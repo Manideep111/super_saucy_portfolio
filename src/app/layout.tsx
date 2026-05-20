@@ -18,8 +18,8 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 const SITE_URL = "https://example.com";
-const SITE_NAME = "Lumen";
-const TITLE = "YOUR NAME — Video Editor";
+const SITE_NAME = "Manideep";
+const TITLE = "Manideep";
 const DESCRIPTION =
   "Premium video editing for creators, founders, and agencies who want to stop losing viewers in the first 3 seconds.";
 

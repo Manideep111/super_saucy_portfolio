@@ -1,11 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, Play } from "lucide-react";
-import { Button } from "@/components/ui/Button";
-import { Magnetic } from "@/components/ui/Magnetic";
 import { Pill } from "@/components/ui/Pill";
-import { TextScramble } from "@/components/ui/TextScramble";
 import { SparkleField } from "@/components/effects/SparkleField";
 
 const container = {
@@ -56,13 +52,10 @@ export function HeroOffer() {
 
         <motion.h1
           variants={item}
-          className="text-gradient mt-7 max-w-[18ch] font-display text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl"
+          className="text-gradient mt-7 max-w-[20ch] font-display text-5xl font-semibold leading-[1.05] tracking-tight md:text-7xl"
         >
-          <TextScramble
-            text="Your Story. Edited Into Something Unforgettable."
-            duration={700}
-            scrambleClassName="text-primary-light"
-          />
+          Raw footage <span className="text-primary-light">&rarr;</span> Scroll
+          stopping visuals that drive results
         </motion.h1>
 
         <motion.p
@@ -72,28 +65,6 @@ export function HeroOffer() {
           Premium video editing for creators, founders, and agencies who want
           to stop losing viewers in the first 3 seconds.
         </motion.p>
-
-        <motion.div
-          variants={item}
-          className="mt-10 flex flex-col items-center gap-3 sm:flex-row"
-        >
-          <Magnetic>
-            <Button
-              variant="primary"
-              size="lg"
-              rightIcon={<ArrowUpRight className="h-4 w-4" />}
-            >
-              Book a Call
-            </Button>
-          </Magnetic>
-          <Button
-            variant="secondary"
-            size="lg"
-            leftIcon={<Play className="h-4 w-4 fill-current" />}
-          >
-            Watch Reel
-          </Button>
-        </motion.div>
       </motion.div>
     </section>
   );
