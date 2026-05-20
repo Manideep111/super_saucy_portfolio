@@ -3,16 +3,12 @@
 import { cn } from "@/lib/cn";
 
 const LOGOS = [
-  "Lumen",
-  "Atlas",
-  "Halo",
-  "Northwind",
-  "Holloway",
-  "Pinecast",
-  "Tempo",
-  "Orbit",
-  "Verge",
-  "Saturn Labs",
+  "Built2Book",
+  "Sell More Online",
+  "TechnologyMatch",
+  "DrenchmanSports",
+  "Nui Brothers",
+  "Prachi Jiwnani (IG creator)",
 ];
 
 function Logo({ name }: { name: string }) {
