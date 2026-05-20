@@ -102,7 +102,7 @@ export function Footer() {
                 <Sparkles className="h-4 w-4" strokeWidth={2.25} />
               </span>
               <span className="font-display text-base font-semibold">
-                Lumen<span className="text-primary-light">.</span>
+                Manideep<span className="text-primary-light">.</span>
               </span>
             </Link>
             <p className="mt-5 max-w-xs text-sm leading-relaxed text-text-secondary">

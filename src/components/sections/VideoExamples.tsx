@@ -23,7 +23,7 @@ const EXAMPLES: VideoExample[] = [
   {
     id: "v1",
     title: "How I Built a $1M Studio at 24",
-    client: "Lumen Studios",
+    client: "Built2Book",
     category: "long",
     platform: "youtube",
     views: "1.4M",
@@ -67,7 +67,7 @@ const EXAMPLES: VideoExample[] = [
   {
     id: "v5",
     title: "Daily Loops — Series Vol. 02",
-    client: "Lumen Studios",
+    client: "Nui Brothers",
     category: "shorts",
     platform: "tiktok",
     views: "3.6M",
