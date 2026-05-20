@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { useMemo, useState } from "react";
-import { Button } from "@/components/ui/Button";
 import { Pill } from "@/components/ui/Pill";
 import { cn } from "@/lib/cn";
 import {
@@ -19,74 +18,75 @@ const FILTERS = [
 
 type FilterId = (typeof FILTERS)[number]["id"];
 
-const EXAMPLES: VideoExample[] = [
+// Six gradient combos cycled across cards for visual variety while
+// thumbnails are missing. Once a real youtubeId is set, the YT
+// thumbnail covers the gradient.
+const GRADIENTS = [
+  "linear-gradient(135deg, #2a0f3d 0%, #6b21a8 50%, #c026d3 100%)",
+  "linear-gradient(135deg, #1e1b4b 0%, #4c1d95 60%, #db2777 100%)",
+  "linear-gradient(135deg, #0c0a18 0%, #312e81 50%, #a855f7 100%)",
+  "linear-gradient(135deg, #4a044e 0%, #7c3aed 50%, #f0abfc 100%)",
+  "linear-gradient(135deg, #082f49 0%, #6b21a8 50%, #c026d3 100%)",
+  "linear-gradient(135deg, #1a0d33 0%, #831843 50%, #f472b6 100%)",
+];
+
+// Cycle real client names across placeholder cards.
+const CLIENT_POOL = [
+  "Built2Book",
+  "Sell More Online",
+  "TechnologyMatch",
+  "DrenchmanSports",
+  "Nui Brothers",
+  "Prachi Jiwnani",
+];
+
+type Seed = {
+  prefix: string;
+  category: VideoExample["category"];
+  baseViews: string[];
+  baseLikes: string[];
+};
+
+const SEEDS: Seed[] = [
   {
-    id: "v1",
-    title: "How I Built a $1M Studio at 24",
-    client: "Built2Book",
+    prefix: "long",
     category: "long",
-    platform: "youtube",
-    views: "1.4M",
-    likes: "62k",
-    gradient:
-      "linear-gradient(135deg, #2a0f3d 0%, #6b21a8 50%, #c026d3 100%)",
+    baseViews: ["1.4M", "2.1M", "820k", "640k", "1.8M", "510k"],
+    baseLikes: ["62k", "98k", "41k", "29k", "75k", "22k"],
   },
   {
-    id: "v2",
-    title: "The 3-Second Hook Test",
-    client: "Holloway Daily",
+    prefix: "short",
     category: "shorts",
-    platform: "tiktok",
-    views: "8.2M",
-    likes: "410k",
-    gradient:
-      "linear-gradient(135deg, #1e1b4b 0%, #4c1d95 60%, #db2777 100%)",
+    baseViews: ["8.2M", "3.6M", "5.1M", "1.9M", "12M", "2.4M"],
+    baseLikes: ["410k", "210k", "260k", "98k", "780k", "140k"],
   },
   {
-    id: "v3",
-    title: "Atlas — Brand Manifesto",
-    client: "Atlas Agency",
+    prefix: "brand",
     category: "brand",
-    platform: "instagram",
-    views: "920k",
-    likes: "44k",
-    gradient:
-      "linear-gradient(135deg, #0c0a18 0%, #312e81 50%, #a855f7 100%)",
-  },
-  {
-    id: "v4",
-    title: "Recutting My Most Hated Video",
-    client: "Marcus Holloway",
-    category: "long",
-    platform: "youtube",
-    views: "2.1M",
-    likes: "98k",
-    gradient:
-      "linear-gradient(135deg, #4a044e 0%, #7c3aed 50%, #f0abfc 100%)",
-  },
-  {
-    id: "v5",
-    title: "Daily Loops — Series Vol. 02",
-    client: "Nui Brothers",
-    category: "shorts",
-    platform: "tiktok",
-    views: "3.6M",
-    likes: "210k",
-    gradient:
-      "linear-gradient(135deg, #082f49 0%, #6b21a8 50%, #c026d3 100%)",
-  },
-  {
-    id: "v6",
-    title: "Halo Watches — Spring Launch",
-    client: "Halo",
-    category: "brand",
-    platform: "instagram",
-    views: "1.1M",
-    likes: "58k",
-    gradient:
-      "linear-gradient(135deg, #1a0d33 0%, #831843 50%, #f472b6 100%)",
+    baseViews: ["920k", "1.1M", "640k", "1.3M", "480k", "780k"],
+    baseLikes: ["44k", "58k", "31k", "62k", "21k", "36k"],
   },
 ];
+
+const EXAMPLES: VideoExample[] = SEEDS.flatMap((seed) =>
+  Array.from({ length: 6 }, (_, i) => {
+    const labelMap = {
+      long: "Long-Form",
+      shorts: "Short",
+      brand: "Brand Film",
+    } as const;
+    return {
+      id: `${seed.prefix}-${i + 1}`,
+      title: `${labelMap[seed.category]} #${i + 1}`,
+      client: CLIENT_POOL[i % CLIENT_POOL.length],
+      category: seed.category,
+      youtubeId: "",
+      views: seed.baseViews[i],
+      likes: seed.baseLikes[i],
+      gradient: GRADIENTS[i % GRADIENTS.length],
+    };
+  }),
+);
 
 const card = {
   hidden: { opacity: 0, y: 28 },
@@ -164,7 +164,7 @@ export function VideoExamples() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
-          variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+          variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
           className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
         >
           {filtered.map((example) => (
@@ -173,12 +173,6 @@ export function VideoExamples() {
             </motion.li>
           ))}
         </motion.ul>
-
-        <div className="mt-12 flex justify-center">
-          <Button variant="ghost" size="lg">
-            Load more work
-          </Button>
-        </div>
       </div>
     </section>
   );
