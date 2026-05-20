@@ -10,8 +10,7 @@ import { cn } from "@/lib/cn";
 
 const NAV_LINKS = [
   { label: "Work", href: "#work" },
-  { label: "Process", href: "#process" },
-  { label: "Pricing", href: "#pricing" },
+  { label: "Testimonials", href: "#testimonials" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
@@ -60,7 +59,7 @@ export function Navigation() {
                 <Sparkles className="h-4 w-4" strokeWidth={2.25} />
               </span>
               <span className="hidden sm:inline font-display text-sm font-semibold tracking-tight">
-                Lumen<span className="text-primary-light">.</span>
+                Manideep<span className="text-primary-light">.</span>
               </span>
             </Link>
 
@@ -101,7 +100,7 @@ export function Navigation() {
               variant="primary"
               rightIcon={<ArrowUpRight className="h-4 w-4" />}
             >
-              Book a Call
+              Contact Me
             </Button>
           </Magnetic>
         </div>
@@ -132,7 +131,7 @@ export function Navigation() {
                     <Sparkles className="h-4 w-4" />
                   </span>
                   <span className="font-display text-base font-semibold">
-                    Lumen<span className="text-primary-light">.</span>
+                    Manideep<span className="text-primary-light">.</span>
                   </span>
                 </Link>
                 <button
@@ -180,7 +179,7 @@ export function Navigation() {
                   rightIcon={<ArrowUpRight className="h-4 w-4" />}
                   onClick={() => setOpen(false)}
                 >
-                  Book a Call
+                  Contact Me
                 </Button>
               </div>
             </div>

@@ -1,4 +1,3 @@
-import { CaseStudy } from "@/components/sections/CaseStudy";
 import { ClientLogos } from "@/components/sections/ClientLogos";
 import { FAQ } from "@/components/sections/FAQ";
 import { FinalCTA } from "@/components/sections/FinalCTA";
@@ -18,7 +17,6 @@ export default function Home() {
         <ClientLogos />
         <VSLPlayer />
         <Testimonials />
-        <CaseStudy />
         <VideoExamples />
         <FAQ />
         <FinalCTA />
