@@ -6,16 +6,17 @@ import { useRef, useState } from "react";
 import { CursorTrail } from "@/components/effects/CursorTrail";
 import { cn } from "@/lib/cn";
 
+// Replace with your YouTube video ID (the part after `v=` in the URL).
+// Leave empty to keep the placeholder poster.
+const VSL_YOUTUBE_ID = "";
+
 export function VSLPlayer() {
   const [playing, setPlaying] = useState(false);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
 
+  const hasVideo = VSL_YOUTUBE_ID.trim().length > 0;
   const handlePlay = () => {
-    const v = videoRef.current;
-    if (!v) return;
-    setPlaying(true);
-    v.play().catch(() => setPlaying(false));
+    if (hasVideo) setPlaying(true);
   };
 
   return (
@@ -41,11 +42,11 @@ export function VSLPlayer() {
           100% { transform: translate(-50%, -50%) scale(1.6); opacity: 0;   }
         }
         .vsl-card { animation: vslBorderPulse 4.5s ease-in-out infinite; }
-        .vsl-card:hover {
+        .vsl-card:hover:not(.vsl-playing) {
           transform: scale(1.01);
           animation-duration: 2.4s;
         }
-        .vsl-card:hover .vsl-play { transform: translate(-50%, -50%) scale(1.08); }
+        .vsl-card:hover:not(.vsl-playing) .vsl-play { transform: translate(-50%, -50%) scale(1.08); }
         .vsl-ring { animation: vslRingPulse 2.2s ease-out infinite; }
       `}</style>
 
@@ -73,24 +74,20 @@ export function VSLPlayer() {
             "vsl-card group relative aspect-video w-full overflow-hidden rounded-3xl",
             "bg-gradient-to-br from-[#1a0d33] via-[#0d0818] to-[#2a0f3d]",
             "transition-transform duration-500 ease-out will-change-transform",
+            playing && "vsl-playing",
           )}
         >
           <CursorTrail containerRef={cardRef} enabled={!playing} />
-          <video
-            ref={videoRef}
-            className={cn(
-              "absolute inset-0 h-full w-full object-cover",
-              playing ? "opacity-100" : "opacity-0",
-            )}
-            poster="/images/vsl-poster.jpg"
-            controls={playing}
-            playsInline
-            preload="metadata"
-          >
-            <source src="/videos/vsl.mp4" type="video/mp4" />
-          </video>
 
-          {!playing ? (
+          {playing ? (
+            <iframe
+              className="absolute inset-0 h-full w-full"
+              src={`https://www.youtube-nocookie.com/embed/${VSL_YOUTUBE_ID}?autoplay=1&rel=0&modestbranding=1&playsinline=1`}
+              title="Video sales letter"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowFullScreen
+            />
+          ) : (
             <>
               {/* poster fallback gradient & subtle pattern */}
               <div
@@ -108,8 +105,12 @@ export function VSLPlayer() {
               <button
                 type="button"
                 onClick={handlePlay}
-                aria-label="Play video"
-                className="absolute inset-0 flex items-center justify-center focus-visible:outline-none"
+                aria-label={hasVideo ? "Play video" : "Video coming soon"}
+                disabled={!hasVideo}
+                className={cn(
+                  "absolute inset-0 flex items-center justify-center focus-visible:outline-none",
+                  hasVideo ? "cursor-pointer" : "cursor-not-allowed",
+                )}
               >
                 <span aria-hidden className="absolute left-1/2 top-1/2 h-20 w-20 -translate-x-1/2 -translate-y-1/2 rounded-full">
                   <span
@@ -131,9 +132,14 @@ export function VSLPlayer() {
                 >
                   <Play className="h-7 w-7 translate-x-0.5 fill-white" strokeWidth={0} />
                 </span>
+                {!hasVideo ? (
+                  <span className="absolute bottom-6 left-1/2 -translate-x-1/2 rounded-full border border-white/15 bg-black/45 backdrop-blur-md px-3 py-1 text-[10px] font-medium uppercase tracking-[0.25em] text-text-secondary">
+                    Drop your YouTube ID in VSLPlayer.tsx
+                  </span>
+                ) : null}
               </button>
             </>
-          ) : null}
+          )}
         </div>
       </motion.div>
     </section>
