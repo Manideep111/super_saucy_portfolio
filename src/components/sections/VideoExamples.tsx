@@ -10,7 +10,6 @@ import {
 } from "./VideoExampleCard";
 
 const FILTERS = [
-  { id: "all", label: "All" },
   { id: "long", label: "Long-form" },
   { id: "shorts", label: "Shorts" },
   { id: "brand", label: "Brand" },
@@ -18,9 +17,6 @@ const FILTERS = [
 
 type FilterId = (typeof FILTERS)[number]["id"];
 
-// Six gradient combos cycled across cards for visual variety while
-// thumbnails are missing. Once a real youtubeId is set, the YT
-// thumbnail covers the gradient.
 const GRADIENTS = [
   "linear-gradient(135deg, #2a0f3d 0%, #6b21a8 50%, #c026d3 100%)",
   "linear-gradient(135deg, #1e1b4b 0%, #4c1d95 60%, #db2777 100%)",
@@ -30,7 +26,6 @@ const GRADIENTS = [
   "linear-gradient(135deg, #1a0d33 0%, #831843 50%, #f472b6 100%)",
 ];
 
-// Cycle real client names across placeholder cards.
 const CLIENT_POOL = [
   "Built2Book",
   "Sell More Online",
@@ -40,53 +35,82 @@ const CLIENT_POOL = [
   "Prachi Jiwnani",
 ];
 
-type Seed = {
-  prefix: string;
-  category: VideoExample["category"];
-  baseViews: string[];
-  baseLikes: string[];
-};
-
-const SEEDS: Seed[] = [
-  {
-    prefix: "long",
-    category: "long",
-    baseViews: ["1.4M", "2.1M", "820k", "640k", "1.8M", "510k"],
-    baseLikes: ["62k", "98k", "41k", "29k", "75k", "22k"],
-  },
-  {
-    prefix: "short",
-    category: "shorts",
-    baseViews: ["8.2M", "3.6M", "5.1M", "1.9M", "12M", "2.4M"],
-    baseLikes: ["410k", "210k", "260k", "98k", "780k", "140k"],
-  },
-  {
-    prefix: "brand",
-    category: "brand",
-    baseViews: ["920k", "1.1M", "640k", "1.3M", "480k", "780k"],
-    baseLikes: ["44k", "58k", "31k", "62k", "21k", "36k"],
-  },
+// 18 real YouTube IDs (6 per category). Replace any title / client /
+// views / likes string here to taste — they're placeholders.
+const LONG_IDS = [
+  "i6KhOJdfPjc",
+  "laeGU7esFIk",
+  "aMImvnf1MDs",
+  "z4AcDEDA_8g",
+  "z4AcDEDA_8g",
+  "ieGEFjEECOA",
+];
+const SHORT_IDS = [
+  "0ICuMCTBAsU",
+  "TzvAYIr91d4",
+  "YTTAlPjGBcY",
+  "CQChUfH-_VI",
+  "sWX-Tmrtk50",
+  "La-MLQ_wCXo",
+];
+const BRAND_IDS = [
+  "ZOdPL_QV_dg",
+  "LhXHoRl-icw",
+  "Mt5-KlmMrGk",
+  "6bEDeOOZPso",
+  "2LOcopD00sY",
+  "Vn_BH9RZ9Hg",
 ];
 
-const EXAMPLES: VideoExample[] = SEEDS.flatMap((seed) =>
-  Array.from({ length: 6 }, (_, i) => {
-    const labelMap = {
-      long: "Long-Form",
-      shorts: "Short",
-      brand: "Brand Film",
-    } as const;
-    return {
-      id: `${seed.prefix}-${i + 1}`,
-      title: `${labelMap[seed.category]} #${i + 1}`,
-      client: CLIENT_POOL[i % CLIENT_POOL.length],
-      category: seed.category,
-      youtubeId: "",
-      views: seed.baseViews[i],
-      likes: seed.baseLikes[i],
-      gradient: GRADIENTS[i % GRADIENTS.length],
-    };
-  }),
-);
+const LONG_STATS = [
+  { views: "1.4M", likes: "62k" },
+  { views: "2.1M", likes: "98k" },
+  { views: "820k", likes: "41k" },
+  { views: "640k", likes: "29k" },
+  { views: "1.8M", likes: "75k" },
+  { views: "510k", likes: "22k" },
+];
+const SHORT_STATS = [
+  { views: "8.2M", likes: "410k" },
+  { views: "3.6M", likes: "210k" },
+  { views: "5.1M", likes: "260k" },
+  { views: "1.9M", likes: "98k" },
+  { views: "12M", likes: "780k" },
+  { views: "2.4M", likes: "140k" },
+];
+const BRAND_STATS = [
+  { views: "920k", likes: "44k" },
+  { views: "1.1M", likes: "58k" },
+  { views: "640k", likes: "31k" },
+  { views: "1.3M", likes: "62k" },
+  { views: "480k", likes: "21k" },
+  { views: "780k", likes: "36k" },
+];
+
+function build(
+  prefix: string,
+  category: VideoExample["category"],
+  label: string,
+  ids: string[],
+  stats: { views: string; likes: string }[],
+): VideoExample[] {
+  return ids.map((youtubeId, i) => ({
+    id: `${prefix}-${i + 1}`,
+    title: `${label} #${i + 1}`,
+    client: CLIENT_POOL[i % CLIENT_POOL.length],
+    category,
+    youtubeId,
+    views: stats[i].views,
+    likes: stats[i].likes,
+    gradient: GRADIENTS[i % GRADIENTS.length],
+  }));
+}
+
+const EXAMPLES: VideoExample[] = [
+  ...build("long", "long", "Long-Form", LONG_IDS, LONG_STATS),
+  ...build("short", "shorts", "Short", SHORT_IDS, SHORT_STATS),
+  ...build("brand", "brand", "Brand Film", BRAND_IDS, BRAND_STATS),
+];
 
 const card = {
   hidden: { opacity: 0, y: 28 },
@@ -98,15 +122,18 @@ const card = {
 };
 
 export function VideoExamples() {
-  const [filter, setFilter] = useState<FilterId>("all");
+  const [filter, setFilter] = useState<FilterId>("long");
 
   const filtered = useMemo(
-    () =>
-      filter === "all"
-        ? EXAMPLES
-        : EXAMPLES.filter((e) => e.category === filter),
+    () => EXAMPLES.filter((e) => e.category === filter),
     [filter],
   );
+
+  // Long-form cards render 16:9; shorts + brand render vertical 9:16.
+  const gridCols =
+    filter === "long"
+      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+      : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4";
 
   return (
     <section id="work" className="relative px-6 py-16 md:py-24 lg:py-32">
@@ -165,7 +192,7 @@ export function VideoExamples() {
           whileInView="visible"
           viewport={{ once: true, margin: "-60px" }}
           variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
-          className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+          className={cn("mt-10 grid gap-5", gridCols)}
         >
           {filtered.map((example) => (
             <motion.li key={example.id} variants={card}>

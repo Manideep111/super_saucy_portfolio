@@ -39,11 +39,14 @@ export function VideoExampleCard({ example }: Props) {
     if (hasVideo) setPlaying(true);
   };
 
+  const aspectClass =
+    example.category === "long" ? "aspect-video" : "aspect-[9/16]";
+
   return (
     <div
       className={cn(
         "group relative overflow-hidden rounded-2xl border border-white/[0.08]",
-        "aspect-square sm:aspect-[4/5] lg:aspect-[9/16]",
+        aspectClass,
         "bg-surface/40 backdrop-blur-xl",
         "transition-all duration-500 ease-out will-change-transform",
         !playing && "hover:scale-[1.03] hover:border-primary/40 hover:shadow-glow-md",
