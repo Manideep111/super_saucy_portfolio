@@ -19,7 +19,7 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "Do I need to provide raw footage?",
-    a: "Yes — but we'll guide you on what we need. Most clients upload to a shared Frame.io or Dropbox; we organize, transcribe, and tag everything before we start cutting so nothing gets lost.",
+    a: "Yes — but I'll guide you on what's needed. Most clients upload to a shared Frame.io or Dropbox; I organize, transcribe, and tag everything before cutting so nothing gets lost.",
   },
   {
     q: "What's your pricing structure?",
