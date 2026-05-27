@@ -11,11 +11,11 @@ import { cn } from "@/lib/cn";
 const FAQS: { q: string; a: string }[] = [
   {
     q: "What types of videos do you edit?",
-    a: "Long-form YouTube, short-form (TikTok / Reels / Shorts), brand films, course content, podcast highlight reels, and motion-design-heavy launch videos. If it's about telling a story with footage, it's in scope.",
+    a: "Short Form (Meta Ads, Reels), Video Sales Letter (VSL), Long Form (YouTube), SaaS videos, Podcast. If it's about telling a story with footage, it is in scope.",
   },
   {
     q: "How long does a typical project take?",
-    a: "Most short-form deliverables turn around in 48 hours. A standard long-form edit lands in 4–6 days. Hero brand pieces with custom motion design run 2–3 weeks depending on scope.",
+    a: "Most short-form work is delivered in 48 hours. VSL and long-form edits typically take 4–6 days. For SaaS motion design, turnaround scales with project scope. We'll confirm the timeline once we've assessed your requirements.",
   },
   {
     q: "Do I need to provide raw footage?",
@@ -27,15 +27,15 @@ const FAQS: { q: string; a: string }[] = [
   },
   {
     q: "How many revisions are included?",
-    a: "Two structural revision rounds and unlimited small tweaks (color, copy, swaps) on every project. We'd rather get it right than gatekeep changes.",
+    a: "Two structural revision rounds and unlimited small tweaks (color, copy, swaps) on every project. I'd rather get it right than gatekeep changes.",
   },
   {
     q: "Can you handle ongoing monthly work?",
-    a: "That's what we do best. Most clients are on a monthly retainer with predictable output: a hero long-form, a batch of shorts, and the supporting assets. We act like an embedded edit team.",
+    a: "Yes, I can handle monthly ongoing work.",
   },
   {
     q: "Do you offer a satisfaction guarantee?",
-    a: "Yes. If your first deliverable doesn't meet the brief after the included revisions, you don't pay for it. We'd rather earn the relationship than hold an invoice.",
+    a: "Yes. If your first deliverable doesn't meet the brief after the included revisions, you don't pay anything. I'd rather earn the relationship than hold an invoice.",
   },
 ];
 
