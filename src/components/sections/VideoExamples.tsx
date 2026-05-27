@@ -11,6 +11,7 @@ import {
 
 const FILTERS = [
   { id: "long", label: "Long-form" },
+  { id: "vsl", label: "VSL" },
   { id: "shorts", label: "Shorts" },
   { id: "brand", label: "Brand" },
 ] as const;
@@ -45,6 +46,7 @@ const LONG_IDS = [
   "z4AcDEDA_8g",
   "ieGEFjEECOA",
 ];
+const VSL_IDS = ["9hQQk0JDGzk", "MJZzI_W_5zQ", "iYQi2BPrcYg"];
 const SHORT_IDS = [
   "0ICuMCTBAsU",
   "TzvAYIr91d4",
@@ -69,6 +71,11 @@ const LONG_STATS = [
   { views: "640k", likes: "29k" },
   { views: "1.8M", likes: "75k" },
   { views: "510k", likes: "22k" },
+];
+const VSL_STATS = [
+  { views: "240k", likes: "11k" },
+  { views: "180k", likes: "8.2k" },
+  { views: "310k", likes: "14k" },
 ];
 const SHORT_STATS = [
   { views: "8.2M", likes: "410k" },
@@ -108,6 +115,7 @@ function build(
 
 const EXAMPLES: VideoExample[] = [
   ...build("long", "long", "Long-Form", LONG_IDS, LONG_STATS),
+  ...build("vsl", "vsl", "VSL", VSL_IDS, VSL_STATS),
   ...build("short", "shorts", "Short", SHORT_IDS, SHORT_STATS),
   ...build("brand", "brand", "Brand Film", BRAND_IDS, BRAND_STATS),
 ];
@@ -129,11 +137,11 @@ export function VideoExamples() {
     [filter],
   );
 
-  // Long-form cards render 16:9; shorts + brand render vertical 9:16.
-  const gridCols =
-    filter === "long"
-      ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-      : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4";
+  // Long-form + VSL cards render 16:9; shorts + brand render vertical 9:16.
+  const isLandscape = filter === "long" || filter === "vsl";
+  const gridCols = isLandscape
+    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+    : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4";
 
   return (
     <section id="work" className="relative px-6 py-16 md:py-24 lg:py-32">

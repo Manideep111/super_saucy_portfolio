@@ -1,6 +1,5 @@
 import { ClientLogos } from "@/components/sections/ClientLogos";
 import { FAQ } from "@/components/sections/FAQ";
-import { FinalCTA } from "@/components/sections/FinalCTA";
 import { Footer } from "@/components/sections/Footer";
 import { HeroOffer } from "@/components/sections/HeroOffer";
 import { Navigation } from "@/components/sections/Navigation";
@@ -19,7 +18,6 @@ export default function Home() {
         <Testimonials />
         <VideoExamples />
         <FAQ />
-        <FinalCTA />
       </main>
       <Footer />
     </>

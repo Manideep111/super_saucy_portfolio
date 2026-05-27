@@ -6,31 +6,12 @@ import { cn } from "@/lib/cn";
 
 const MAIN_PAGES = [
   { label: "Work", href: "#work" },
-  { label: "Process", href: "#process" },
-  { label: "Pricing", href: "#pricing" },
   { label: "About", href: "#about" },
   { label: "Contact", href: "#contact" },
 ];
 
-const RESOURCES = [
-  { label: "Blog", href: "#" },
-  { label: "Case Studies", href: "#case-study" },
-  { label: "Free Guides", href: "#" },
-  { label: "Privacy Policy", href: "#" },
-];
-
 type IconProps = { className?: string };
 
-function YoutubeIcon({ className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden>
-      <path
-        fill="currentColor"
-        d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z"
-      />
-    </svg>
-  );
-}
 function InstagramIcon({ className }: IconProps) {
   return (
     <svg viewBox="0 0 24 24" className={className} aria-hidden>
@@ -63,23 +44,27 @@ function LinkedinIcon({ className }: IconProps) {
     </svg>
   );
 }
-function TikTokIcon({ className }: IconProps) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} aria-hidden>
-      <path
-        fill="currentColor"
-        d="M19.6 6.3a5.4 5.4 0 0 1-3.4-1.2 5.4 5.4 0 0 1-2-3.6h-3.4v13.2a2.7 2.7 0 1 1-2.7-2.7c.3 0 .6 0 .8.1V8.7a6.2 6.2 0 1 0 5.4 6.1V9.2a8.8 8.8 0 0 0 5.3 1.8V7.6c-.5 0-1-.4-1.4-.5-.2-.2-.4-.5-.6-.8Z"
-      />
-    </svg>
-  );
-}
 
-const SOCIAL: { label: string; href: string; Icon: (p: IconProps) => React.JSX.Element }[] = [
-  { label: "YouTube", href: "#", Icon: YoutubeIcon },
-  { label: "Instagram", href: "#", Icon: InstagramIcon },
-  { label: "Twitter (X)", href: "#", Icon: TwitterXIcon },
-  { label: "LinkedIn", href: "#", Icon: LinkedinIcon },
-  { label: "TikTok", href: "#", Icon: TikTokIcon },
+const SOCIAL: {
+  label: string;
+  href: string;
+  Icon: (p: IconProps) => React.JSX.Element;
+}[] = [
+  {
+    label: "Instagram",
+    href: "https://www.instagram.com/manideep.edits/",
+    Icon: InstagramIcon,
+  },
+  {
+    label: "Twitter (X)",
+    href: "https://x.com/manideep_bade",
+    Icon: TwitterXIcon,
+  },
+  {
+    label: "LinkedIn",
+    href: "https://www.linkedin.com/in/manideep-bade/",
+    Icon: LinkedinIcon,
+  },
 ];
 
 const linkClass = cn(
@@ -89,10 +74,10 @@ const linkClass = cn(
 
 export function Footer() {
   return (
-    <footer className="relative px-6 pb-12 pt-16 md:pt-24">
+    <footer id="contact" className="relative px-6 pb-12 pt-16 md:pt-24">
       <div className="mx-auto max-w-6xl">
-        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4">
-          <div className="lg:col-span-1">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
+          <div>
             <Link
               href="/"
               aria-label="Home"
@@ -127,27 +112,17 @@ export function Footer() {
 
           <div>
             <h3 className="text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
-              Resources
-            </h3>
-            <ul className="mt-5 flex flex-col gap-3">
-              {RESOURCES.map((l) => (
-                <li key={l.label}>
-                  <Link href={l.href} className={linkClass}>
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
               Social
             </h3>
             <ul className="mt-5 flex flex-col gap-3">
               {SOCIAL.map(({ label, href, Icon }) => (
                 <li key={label}>
-                  <Link href={href} className={linkClass}>
+                  <Link
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={linkClass}
+                  >
                     <Icon className="h-4 w-4" />
                     {label}
                   </Link>
@@ -160,7 +135,7 @@ export function Footer() {
         <div className="mt-16 h-px w-full bg-gradient-to-r from-transparent via-white/15 to-transparent" />
 
         <div className="mt-8 flex flex-col items-center justify-between gap-3 text-xs text-text-muted md:flex-row">
-          <span>&copy; 2026 [Your Name]. All rights reserved.</span>
+          <span>&copy; 2026 Manideep. All rights reserved.</span>
           <span className="inline-flex items-center gap-1.5">
             Made with
             <span className="text-primary-light" aria-hidden>

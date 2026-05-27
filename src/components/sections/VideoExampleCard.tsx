@@ -4,7 +4,7 @@ import { Eye, Heart, Play } from "lucide-react";
 import { useState } from "react";
 import { cn } from "@/lib/cn";
 
-export type Category = "long" | "shorts" | "brand";
+export type Category = "long" | "vsl" | "shorts" | "brand";
 
 export type VideoExample = {
   id: string;
@@ -20,6 +20,7 @@ export type VideoExample = {
 
 const CATEGORY_LABEL: Record<Category, string> = {
   long: "Long-form",
+  vsl: "VSL",
   shorts: "Short",
   brand: "Brand",
 };
@@ -39,8 +40,10 @@ export function VideoExampleCard({ example }: Props) {
     if (hasVideo) setPlaying(true);
   };
 
-  const aspectClass =
-    example.category === "long" ? "aspect-video" : "aspect-[9/16]";
+  // Long-form and VSL render 16:9. Shorts and brand render vertical 9:16.
+  const isLandscape =
+    example.category === "long" || example.category === "vsl";
+  const aspectClass = isLandscape ? "aspect-video" : "aspect-[9/16]";
 
   return (
     <div
