@@ -1,15 +1,26 @@
 # Testimonial screenshots
 
-Drop your real client screenshots in this folder using these exact filenames:
+The Testimonials section is a carousel — drop your screenshots in
+this folder using the filenames listed below. They cycle every 5
+seconds (paused on hover/focus) and the user can step through them
+with the left/right arrows or the dots underneath.
+
+## Expected files
 
 - `testimonial-1.png`
 - `testimonial-2.png`
 - `testimonial-3.png`
+- `testimonial-4.png`
 
-Recommended:
-- Format: `.png` (or `.jpg` — update the `src` in `src/components/sections/Testimonials.tsx` to match)
-- Aspect ratio: roughly **4:5 portrait** (e.g. 800x1000). Other ratios work but won't fill the card edge-to-edge.
-- Crop tight around the conversation/quote so the text stays readable on the card.
+## Notes
 
-To use a different number of images, edit the `TESTIMONIAL_IMAGES` array
-in `src/components/sections/Testimonials.tsx`.
+- **Any aspect ratio is fine.** Each image is rendered with
+  `object-contain`, so a tall WhatsApp screenshot, a wide Slack
+  thread, and an Upwork review card all display without being
+  cropped. The carousel stage has a fixed height; whitespace fills
+  the rest.
+- **PNG or JPG both work.** If you want to use `.jpg`, just update
+  the `src` paths in the `TESTIMONIAL_IMAGES` array inside
+  `src/components/sections/Testimonials.tsx`.
+- **To add or remove slides**, edit the same array. The dot indicator
+  and the auto-advance loop wrap on whatever length you give them.
