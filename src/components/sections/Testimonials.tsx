@@ -13,21 +13,23 @@ type TestimonialImage = {
 
 // Drop the matching files into /public/images/testimonials/.
 // See public/images/testimonials/README.md for sizing guidance.
+// Placeholders ship as .svg today; swap each `src` to your real
+// PNG/JPG once you have the screenshots.
 const TESTIMONIAL_IMAGES: TestimonialImage[] = [
   {
-    src: "/images/testimonials/testimonial-1.png",
+    src: "/images/testimonials/testimonial-1.svg",
     alt: "Upwork review — Video Editor and Motion Graphic Artist",
   },
   {
-    src: "/images/testimonials/testimonial-2.png",
+    src: "/images/testimonials/testimonial-2.svg",
     alt: "Slack thread with client",
   },
   {
-    src: "/images/testimonials/testimonial-3.png",
+    src: "/images/testimonials/testimonial-3.svg",
     alt: "WhatsApp client chat — exceptional work",
   },
   {
-    src: "/images/testimonials/testimonial-4.png",
+    src: "/images/testimonials/testimonial-4.svg",
     alt: "Upwork reviews — SaaS launch and basketball edits",
   },
 ];

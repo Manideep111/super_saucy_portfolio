@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540" role="img" aria-label="Upwork reviews placeholder">
+  <defs>
+    <linearGradient id="bg4" x1="0" y1="0" x2="960" y2="540" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#111114"/>
+      <stop offset="1" stop-color="#1c1c20"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" rx="16" fill="url(#bg4)"/>
+
+  <!-- review 1 -->
+  <g transform="translate(0 30)">
+    <text x="40" y="60" font-family="Inter, system-ui, sans-serif" font-size="30" font-weight="700" fill="#ffffff">
+      Freelance Motion Graphics Designer - SaaS Product Launch Videos
+    </text>
+    <!-- stars + score -->
+    <g transform="translate(40 88)" fill="#f97316">
+      <path d="M0 14 L4 6 L8 14 L17 14.5 L10 20 L12 28 L4 23 L-4 28 L-2 20 L-9 14.5 Z"/>
+      <path d="M28 14 L32 6 L36 14 L45 14.5 L38 20 L40 28 L32 23 L24 28 L26 20 L19 14.5 Z"/>
+      <path d="M56 14 L60 6 L64 14 L73 14.5 L66 20 L68 28 L60 23 L52 28 L54 20 L47 14.5 Z"/>
+      <path d="M84 14 L88 6 L92 14 L101 14.5 L94 20 L96 28 L88 23 L80 28 L82 20 L75 14.5 Z"/>
+      <path d="M112 14 L116 6 L120 14 L129 14.5 L122 20 L124 28 L116 23 L108 28 L110 20 L103 14.5 Z"/>
+    </g>
+    <text x="180" y="112" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="600" fill="#ffffff">5.0</text>
+    <line x1="222" y1="98" x2="222" y2="118" stroke="#3a3a3f" stroke-width="2"/>
+    <text x="242" y="112" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#a3a3a8">Oct 13, 2025 – Oct 23, 2025</text>
+    <text x="40" y="170" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#ffffff">$60.00</text>
+    <text x="200" y="170" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#a3a3a8">Fixed price</text>
+  </g>
+
+  <line x1="40" y1="240" x2="920" y2="240" stroke="#2e2e34" stroke-width="1"/>
+
+  <!-- review 2 -->
+  <g transform="translate(0 280)">
+    <text x="40" y="50" font-family="Inter, system-ui, sans-serif" font-size="30" font-weight="700" fill="#ffffff">
+      Video editor for Basketball Content/Thumbnail designer
+    </text>
+    <g transform="translate(40 78)" fill="#f97316">
+      <path d="M0 14 L4 6 L8 14 L17 14.5 L10 20 L12 28 L4 23 L-4 28 L-2 20 L-9 14.5 Z"/>
+      <path d="M28 14 L32 6 L36 14 L45 14.5 L38 20 L40 28 L32 23 L24 28 L26 20 L19 14.5 Z"/>
+      <path d="M56 14 L60 6 L64 14 L73 14.5 L66 20 L68 28 L60 23 L52 28 L54 20 L47 14.5 Z"/>
+      <path d="M84 14 L88 6 L92 14 L101 14.5 L94 20 L96 28 L88 23 L80 28 L82 20 L75 14.5 Z"/>
+      <path d="M112 14 L116 6 L120 14 L129 14.5 L122 20 L124 28 L116 23 L108 28 L110 20 L103 14.5 Z"/>
+    </g>
+    <text x="180" y="102" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="600" fill="#ffffff">5.0</text>
+    <line x1="222" y1="88" x2="222" y2="108" stroke="#3a3a3f" stroke-width="2"/>
+    <text x="242" y="102" font-family="Inter, system-ui, sans-serif" font-size="18" fill="#a3a3a8">Sep 1, 2025 – Sep 3, 2025</text>
+    <text x="40" y="160" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#ffffff">$40.00</text>
+    <text x="200" y="160" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#a3a3a8">Fixed price</text>
+  </g>
+
+  <text x="900" y="36" text-anchor="end" font-family="Inter, system-ui, sans-serif" font-size="12" letter-spacing="3" fill="#52525b">
+    PLACEHOLDER · TESTIMONIAL 4
+  </text>
+</svg>

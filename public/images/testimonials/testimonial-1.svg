@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-label="Upwork review placeholder">
+  <defs>
+    <linearGradient id="bg1" x1="0" y1="0" x2="960" y2="420" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#111114"/>
+      <stop offset="1" stop-color="#1c1c20"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="420" rx="16" fill="url(#bg1)"/>
+  <text x="60" y="100" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="700" fill="#ffffff">
+    Video Editor and Motion Graphic Artist
+  </text>
+  <!-- stars -->
+  <g transform="translate(60 138)" fill="#f97316">
+    <path d="M0 14 L4 6 L8 14 L17 14.5 L10 20 L12 28 L4 23 L-4 28 L-2 20 L-9 14.5 Z"/>
+    <path d="M28 14 L32 6 L36 14 L45 14.5 L38 20 L40 28 L32 23 L24 28 L26 20 L19 14.5 Z"/>
+    <path d="M56 14 L60 6 L64 14 L73 14.5 L66 20 L68 28 L60 23 L52 28 L54 20 L47 14.5 Z"/>
+    <path d="M84 14 L88 6 L92 14 L101 14.5 L94 20 L96 28 L88 23 L80 28 L82 20 L75 14.5 Z"/>
+    <path d="M112 14 L116 6 L120 14 L129 14.5 L122 20 L124 28 L116 23 L108 28 L110 20 L103 14.5 Z"/>
+  </g>
+  <text x="200" y="158" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="600" fill="#ffffff">5.0</text>
+  <line x1="245" y1="142" x2="245" y2="162" stroke="#3a3a3f" stroke-width="2"/>
+  <text x="265" y="158" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#a3a3a8">Aug 12, 2025 – Sep 1, 2025</text>
+  <text x="60" y="230" font-family="Inter, system-ui, sans-serif" font-style="italic" font-size="22" fill="#d4d4d8">
+    “Manideep was a great animator to work with. Always delivering high
+  </text>
+  <text x="60" y="262" font-family="Inter, system-ui, sans-serif" font-style="italic" font-size="22" fill="#d4d4d8">
+    quality work on time and responding quick and efficiently to revisions…”
+  </text>
+  <!-- tags -->
+  <g transform="translate(60 300)">
+    <rect width="160" height="40" rx="8" fill="#26262b"/>
+    <text x="80" y="26" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#e4e4e7">Collaborative</text>
+    <rect x="172" width="200" height="40" rx="8" fill="#26262b"/>
+    <text x="272" y="26" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#e4e4e7">Committed to Quality</text>
+    <rect x="384" width="120" height="40" rx="8" fill="#26262b"/>
+    <text x="444" y="26" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="16" fill="#e4e4e7">Reliable</text>
+  </g>
+  <text x="60" y="392" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="700" fill="#ffffff">$108.00</text>
+  <text x="240" y="392" font-family="Inter, system-ui, sans-serif" font-size="20" fill="#a3a3a8">Fixed price</text>
+  <text x="900" y="36" text-anchor="end" font-family="Inter, system-ui, sans-serif" font-size="12" letter-spacing="3" fill="#52525b">
+    PLACEHOLDER · TESTIMONIAL 1
+  </text>
+</svg>
