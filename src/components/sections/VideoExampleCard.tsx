@@ -17,7 +17,7 @@ export type VideoExample = {
 const CATEGORY_LABEL: Record<Category, string> = {
   long: "Long-form",
   vsl: "VSL",
-  shorts: "Short",
+  shorts: "Short-Form",
   brand: "Brand",
 };
 
