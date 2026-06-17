@@ -19,6 +19,20 @@ const FILTERS = [
 
 type FilterId = (typeof FILTERS)[number]["id"];
 
+const PER_PAGE: Record<FilterId, number> = {
+  long: 3,
+  vsl: 3,
+  shorts: 5,
+  brand: 5,
+};
+
+const GRID_COLS: Record<FilterId, string> = {
+  long: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+  vsl: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3",
+  shorts: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5",
+  brand: "grid-cols-2 sm:grid-cols-3 lg:grid-cols-5",
+};
+
 const GRADIENTS = [
   "linear-gradient(135deg, #2a0f3d 0%, #6b21a8 50%, #c026d3 100%)",
   "linear-gradient(135deg, #1e1b4b 0%, #4c1d95 60%, #db2777 100%)",
@@ -78,12 +92,12 @@ const EXAMPLES: VideoExample[] = [
 
 const slideVariants = {
   enter: (direction: number) => ({
-    x: direction > 0 ? 80 : -80,
+    x: direction > 0 ? 60 : -60,
     opacity: 0,
   }),
   center: { x: 0, opacity: 1 },
   exit: (direction: number) => ({
-    x: direction > 0 ? -80 : 80,
+    x: direction > 0 ? -60 : 60,
     opacity: 0,
   }),
 };
@@ -100,28 +114,34 @@ const headerItem = {
 export function VideoExamples() {
   const [state, setState] = useState<{
     filter: FilterId;
-    index: number;
+    pageIndex: number;
     direction: number;
-  }>({ filter: "long", index: 0, direction: 0 });
+  }>({ filter: "long", pageIndex: 0, direction: 0 });
 
   const filtered = useMemo(
     () => EXAMPLES.filter((e) => e.category === state.filter),
     [state.filter],
   );
 
-  const current = filtered[state.index] ?? filtered[0];
+  const perPage = PER_PAGE[state.filter];
+  const totalPages = Math.max(1, Math.ceil(filtered.length / perPage));
+  const pageItems = filtered.slice(
+    state.pageIndex * perPage,
+    (state.pageIndex + 1) * perPage,
+  );
 
   const changeFilter = useCallback((next: FilterId) => {
-    setState({ filter: next, index: 0, direction: 0 });
+    setState({ filter: next, pageIndex: 0, direction: 0 });
   }, []);
 
   const go = useCallback((step: number) => {
     setState((prev) => {
       const len = EXAMPLES.filter((e) => e.category === prev.filter).length;
-      if (len === 0) return prev;
+      const pages = Math.max(1, Math.ceil(len / PER_PAGE[prev.filter]));
+      if (pages <= 1) return prev;
       return {
         ...prev,
-        index: (prev.index + step + len) % len,
+        pageIndex: (prev.pageIndex + step + pages) % pages,
         direction: step,
       };
     });
@@ -130,16 +150,15 @@ export function VideoExamples() {
   const goTo = useCallback((target: number) => {
     setState((prev) => ({
       ...prev,
-      index: target,
+      pageIndex: target,
       direction:
-        target === prev.index ? 0 : target > prev.index ? 1 : -1,
+        target === prev.pageIndex ? 0 : target > prev.pageIndex ? 1 : -1,
     }));
   }, []);
 
-  const isLandscape = state.filter === "long" || state.filter === "vsl";
-  const stageWidth = isLandscape
-    ? "w-full max-w-3xl"
-    : "w-full max-w-[320px] sm:max-w-[340px]";
+  const currentFilter = FILTERS.find((f) => f.id === state.filter)!;
+  const showControls = totalPages > 1;
+  const gridCols = GRID_COLS[state.filter];
 
   return (
     <section id="work" className="relative px-6 py-16 md:py-24 lg:py-32">
@@ -169,6 +188,7 @@ export function VideoExamples() {
           </motion.p>
         </motion.div>
 
+        {/* Filter pills (kept from prior design — purple gradient on active) */}
         <div className="mt-12 flex flex-wrap items-center justify-center gap-2">
           {FILTERS.map((f) => {
             const active = state.filter === f.id;
@@ -192,61 +212,94 @@ export function VideoExamples() {
           })}
         </div>
 
-        <div className="mt-12 flex flex-col items-center">
-          <div className={cn("relative mx-auto", stageWidth)}>
+        {/* Section header: outlined pill + decorative divider line */}
+        <div className="mt-12 flex items-center gap-4">
+          <span
+            className={cn(
+              "inline-flex items-center rounded-full",
+              "border border-primary/50 bg-primary/[0.08] backdrop-blur-md",
+              "px-4 py-1.5 text-[11px] font-medium uppercase tracking-[0.25em] text-primary-light",
+            )}
+          >
+            {currentFilter.label}
+          </span>
+          <div className="h-px flex-1 bg-gradient-to-r from-primary/40 via-primary/15 to-transparent" />
+        </div>
+
+        {/* Bounding box around the paginated grid */}
+        <div className="relative mt-4">
+          <div
+            className={cn(
+              "relative overflow-hidden rounded-3xl",
+              "border border-white/[0.08] bg-surface/30 backdrop-blur-xl",
+              "p-5 sm:p-6 md:p-8",
+              "shadow-[inset_0_0_60px_rgba(168,85,247,0.06)]",
+            )}
+          >
             <AnimatePresence custom={state.direction} mode="wait">
               <motion.div
-                key={`${state.filter}-${current.id}`}
+                key={`${state.filter}-${state.pageIndex}`}
                 custom={state.direction}
                 variants={slideVariants}
                 initial="enter"
                 animate="center"
                 exit="exit"
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                className={cn("grid gap-4 md:gap-5", gridCols)}
               >
-                <VideoExampleCard example={current} />
+                {pageItems.map((example) => (
+                  <VideoExampleCard key={example.id} example={example} />
+                ))}
               </motion.div>
             </AnimatePresence>
-
-            <button
-              type="button"
-              onClick={() => go(-1)}
-              aria-label="Previous video"
-              className={cn(
-                "absolute left-2 top-1/2 z-20 -translate-y-1/2 md:-left-6",
-                "inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full",
-                "border border-white/[0.1] bg-black/55 text-white backdrop-blur-md",
-                "transition-all duration-300 hover:border-primary/40 hover:bg-black/75 hover:shadow-glow-sm",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-              )}
-            >
-              <ChevronLeft className="h-5 w-5" />
-            </button>
-            <button
-              type="button"
-              onClick={() => go(1)}
-              aria-label="Next video"
-              className={cn(
-                "absolute right-2 top-1/2 z-20 -translate-y-1/2 md:-right-6",
-                "inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full",
-                "border border-white/[0.1] bg-black/55 text-white backdrop-blur-md",
-                "transition-all duration-300 hover:border-primary/40 hover:bg-black/75 hover:shadow-glow-sm",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-              )}
-            >
-              <ChevronRight className="h-5 w-5" />
-            </button>
           </div>
 
+          {/* Lateral arrows (purple-tinted to match the screenshot-1 theme) */}
+          {showControls ? (
+            <>
+              <button
+                type="button"
+                onClick={() => go(-1)}
+                aria-label="Previous page"
+                className={cn(
+                  "absolute left-2 top-1/2 z-20 -translate-y-1/2 md:-left-5",
+                  "inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full",
+                  "border border-white/[0.1] bg-black/55 text-white backdrop-blur-md",
+                  "transition-all duration-300 hover:border-primary/40 hover:bg-black/75 hover:shadow-glow-sm",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                )}
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => go(1)}
+                aria-label="Next page"
+                className={cn(
+                  "absolute right-2 top-1/2 z-20 -translate-y-1/2 md:-right-5",
+                  "inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full",
+                  "border border-white/[0.1] bg-black/55 text-white backdrop-blur-md",
+                  "transition-all duration-300 hover:border-primary/40 hover:bg-black/75 hover:shadow-glow-sm",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                )}
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
+            </>
+          ) : null}
+        </div>
+
+        {/* Pagination dots (only when there's more than one page) */}
+        {showControls ? (
           <div className="mt-6 flex items-center justify-center gap-2">
-            {filtered.map((_, i) => {
-              const active = i === state.index;
+            {Array.from({ length: totalPages }).map((_, i) => {
+              const active = i === state.pageIndex;
               return (
                 <button
                   key={i}
                   type="button"
                   onClick={() => goTo(i)}
-                  aria-label={`Go to video ${i + 1}`}
+                  aria-label={`Go to page ${i + 1}`}
                   aria-current={active}
                   className={cn(
                     "h-2 cursor-pointer rounded-full transition-all duration-300",
@@ -259,7 +312,7 @@ export function VideoExamples() {
               );
             })}
           </div>
-        </div>
+        ) : null}
       </div>
     </section>
   );
