@@ -15,6 +15,13 @@ const NAV_LINKS = [
   { label: "Contact", href: "#contact" },
 ];
 
+const CONTACT_URL = "https://x.com/manideep_bade";
+const openContact = () => {
+  if (typeof window !== "undefined") {
+    window.open(CONTACT_URL, "_blank", "noopener,noreferrer");
+  }
+};
+
 export function Navigation() {
   const { scrollY } = useScroll();
   const scale = useTransform(scrollY, [0, 200], [1, 0.92]);
@@ -99,6 +106,7 @@ export function Navigation() {
               size="md"
               variant="primary"
               rightIcon={<ArrowUpRight className="h-4 w-4" />}
+              onClick={openContact}
             >
               Contact Me
             </Button>
@@ -177,7 +185,10 @@ export function Navigation() {
                   size="lg"
                   className="w-full"
                   rightIcon={<ArrowUpRight className="h-4 w-4" />}
-                  onClick={() => setOpen(false)}
+                  onClick={() => {
+                    setOpen(false);
+                    openContact();
+                  }}
                 >
                   Contact Me
                 </Button>

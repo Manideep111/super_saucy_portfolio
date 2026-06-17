@@ -87,6 +87,15 @@ export function FAQ() {
                 variant="primary"
                 size="lg"
                 rightIcon={<ArrowUpRight className="h-4 w-4" />}
+                onClick={() => {
+                  if (typeof window !== "undefined") {
+                    window.open(
+                      "https://x.com/manideep_bade",
+                      "_blank",
+                      "noopener,noreferrer",
+                    );
+                  }
+                }}
               >
                 Get in Touch
               </Button>

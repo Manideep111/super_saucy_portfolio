@@ -1,7 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useCallback, useMemo, useState } from "react";
 import { Pill } from "@/components/ui/Pill";
 import { cn } from "@/lib/cn";
 import {
@@ -27,17 +28,6 @@ const GRADIENTS = [
   "linear-gradient(135deg, #1a0d33 0%, #831843 50%, #f472b6 100%)",
 ];
 
-const CLIENT_POOL = [
-  "Built2Book",
-  "Sell More Online",
-  "TechnologyMatch",
-  "DrenchmanSports",
-  "Nui Brothers",
-  "Prachi Jiwnani",
-];
-
-// 18 real YouTube IDs (6 per category). Replace any title / client /
-// views / likes string here to taste — they're placeholders.
 const LONG_IDS = [
   "i6KhOJdfPjc",
   "laeGU7esFIk",
@@ -64,64 +54,40 @@ const BRAND_IDS = [
   "Vn_BH9RZ9Hg",
 ];
 
-const LONG_STATS = [
-  { views: "1.4M", likes: "62k" },
-  { views: "2.1M", likes: "98k" },
-  { views: "820k", likes: "41k" },
-  { views: "640k", likes: "29k" },
-  { views: "1.8M", likes: "75k" },
-  { views: "510k", likes: "22k" },
-];
-const VSL_STATS = [
-  { views: "240k", likes: "11k" },
-  { views: "180k", likes: "8.2k" },
-  { views: "310k", likes: "14k" },
-];
-const SHORT_STATS = [
-  { views: "8.2M", likes: "410k" },
-  { views: "3.6M", likes: "210k" },
-  { views: "5.1M", likes: "260k" },
-  { views: "1.9M", likes: "98k" },
-  { views: "12M", likes: "780k" },
-  { views: "2.4M", likes: "140k" },
-];
-const BRAND_STATS = [
-  { views: "920k", likes: "44k" },
-  { views: "1.1M", likes: "58k" },
-  { views: "640k", likes: "31k" },
-  { views: "1.3M", likes: "62k" },
-  { views: "480k", likes: "21k" },
-  { views: "780k", likes: "36k" },
-];
-
 function build(
   prefix: string,
   category: VideoExample["category"],
-  label: string,
   ids: string[],
-  stats: { views: string; likes: string }[],
 ): VideoExample[] {
   return ids.map((youtubeId, i) => ({
     id: `${prefix}-${i + 1}`,
-    title: `${label} #${i + 1}`,
-    client: CLIENT_POOL[i % CLIENT_POOL.length],
     category,
     youtubeId,
-    views: stats[i].views,
-    likes: stats[i].likes,
     gradient: GRADIENTS[i % GRADIENTS.length],
   }));
 }
 
 const EXAMPLES: VideoExample[] = [
-  ...build("long", "long", "Long-Form", LONG_IDS, LONG_STATS),
-  ...build("vsl", "vsl", "VSL", VSL_IDS, VSL_STATS),
-  ...build("short", "shorts", "Short", SHORT_IDS, SHORT_STATS),
-  ...build("brand", "brand", "Brand Film", BRAND_IDS, BRAND_STATS),
+  ...build("long", "long", LONG_IDS),
+  ...build("vsl", "vsl", VSL_IDS),
+  ...build("short", "shorts", SHORT_IDS),
+  ...build("brand", "brand", BRAND_IDS),
 ];
 
-const card = {
-  hidden: { opacity: 0, y: 28 },
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? 80 : -80,
+    opacity: 0,
+  }),
+  center: { x: 0, opacity: 1 },
+  exit: (direction: number) => ({
+    x: direction > 0 ? -80 : 80,
+    opacity: 0,
+  }),
+};
+
+const headerItem = {
+  hidden: { opacity: 0, y: 18 },
   visible: {
     opacity: 1,
     y: 0,
@@ -130,18 +96,48 @@ const card = {
 };
 
 export function VideoExamples() {
-  const [filter, setFilter] = useState<FilterId>("long");
+  const [state, setState] = useState<{
+    filter: FilterId;
+    index: number;
+    direction: number;
+  }>({ filter: "long", index: 0, direction: 0 });
 
   const filtered = useMemo(
-    () => EXAMPLES.filter((e) => e.category === filter),
-    [filter],
+    () => EXAMPLES.filter((e) => e.category === state.filter),
+    [state.filter],
   );
 
-  // Long-form + VSL cards render 16:9; shorts + brand render vertical 9:16.
-  const isLandscape = filter === "long" || filter === "vsl";
-  const gridCols = isLandscape
-    ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-    : "grid-cols-2 sm:grid-cols-3 lg:grid-cols-4";
+  const current = filtered[state.index] ?? filtered[0];
+
+  const changeFilter = useCallback((next: FilterId) => {
+    setState({ filter: next, index: 0, direction: 0 });
+  }, []);
+
+  const go = useCallback((step: number) => {
+    setState((prev) => {
+      const len = EXAMPLES.filter((e) => e.category === prev.filter).length;
+      if (len === 0) return prev;
+      return {
+        ...prev,
+        index: (prev.index + step + len) % len,
+        direction: step,
+      };
+    });
+  }, []);
+
+  const goTo = useCallback((target: number) => {
+    setState((prev) => ({
+      ...prev,
+      index: target,
+      direction:
+        target === prev.index ? 0 : target > prev.index ? 1 : -1,
+    }));
+  }, []);
+
+  const isLandscape = state.filter === "long" || state.filter === "vsl";
+  const stageWidth = isLandscape
+    ? "w-full max-w-3xl"
+    : "w-full max-w-[320px] sm:max-w-[340px]";
 
   return (
     <section id="work" className="relative px-6 py-16 md:py-24 lg:py-32">
@@ -153,17 +149,17 @@ export function VideoExamples() {
           variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
           className="flex flex-col items-center text-center"
         >
-          <motion.div variants={card}>
+          <motion.div variants={headerItem}>
             <Pill>PORTFOLIO</Pill>
           </motion.div>
           <motion.h2
-            variants={card}
+            variants={headerItem}
             className="text-gradient mt-6 max-w-[20ch] font-display text-4xl font-semibold leading-tight tracking-tight md:text-5xl"
           >
             Work That Moves People
           </motion.h2>
           <motion.p
-            variants={card}
+            variants={headerItem}
             className="mt-5 max-w-2xl text-base text-text-secondary md:text-lg"
           >
             A glimpse at recent projects across YouTube, short-form, and brand
@@ -173,12 +169,12 @@ export function VideoExamples() {
 
         <div className="mt-12 flex flex-wrap items-center justify-center gap-2">
           {FILTERS.map((f) => {
-            const active = filter === f.id;
+            const active = state.filter === f.id;
             return (
               <button
                 key={f.id}
                 type="button"
-                onClick={() => setFilter(f.id)}
+                onClick={() => changeFilter(f.id)}
                 className={cn(
                   "cursor-pointer rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
                   "border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
@@ -194,20 +190,74 @@ export function VideoExamples() {
           })}
         </div>
 
-        <motion.ul
-          key={filter}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={{ visible: { transition: { staggerChildren: 0.06 } } }}
-          className={cn("mt-10 grid gap-5", gridCols)}
-        >
-          {filtered.map((example) => (
-            <motion.li key={example.id} variants={card}>
-              <VideoExampleCard example={example} />
-            </motion.li>
-          ))}
-        </motion.ul>
+        <div className="mt-12 flex flex-col items-center">
+          <div className={cn("relative mx-auto", stageWidth)}>
+            <AnimatePresence custom={state.direction} mode="wait">
+              <motion.div
+                key={`${state.filter}-${current.id}`}
+                custom={state.direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <VideoExampleCard example={current} />
+              </motion.div>
+            </AnimatePresence>
+
+            <button
+              type="button"
+              onClick={() => go(-1)}
+              aria-label="Previous video"
+              className={cn(
+                "absolute left-2 top-1/2 z-20 -translate-y-1/2 md:-left-6",
+                "inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full",
+                "border border-white/[0.1] bg-black/55 text-white backdrop-blur-md",
+                "transition-all duration-300 hover:border-primary/40 hover:bg-black/75 hover:shadow-glow-sm",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+              )}
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={() => go(1)}
+              aria-label="Next video"
+              className={cn(
+                "absolute right-2 top-1/2 z-20 -translate-y-1/2 md:-right-6",
+                "inline-flex h-11 w-11 cursor-pointer items-center justify-center rounded-full",
+                "border border-white/[0.1] bg-black/55 text-white backdrop-blur-md",
+                "transition-all duration-300 hover:border-primary/40 hover:bg-black/75 hover:shadow-glow-sm",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+              )}
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
+
+          <div className="mt-6 flex items-center justify-center gap-2">
+            {filtered.map((_, i) => {
+              const active = i === state.index;
+              return (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => goTo(i)}
+                  aria-label={`Go to video ${i + 1}`}
+                  aria-current={active}
+                  className={cn(
+                    "h-2 cursor-pointer rounded-full transition-all duration-300",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                    active
+                      ? "w-6 bg-primary shadow-glow-sm"
+                      : "w-2 bg-white/25 hover:bg-white/40",
+                  )}
+                />
+              );
+            })}
+          </div>
+        </div>
       </div>
     </section>
   );
