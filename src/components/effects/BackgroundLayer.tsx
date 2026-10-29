@@ -3,7 +3,6 @@
 import { useReducedMotion } from "framer-motion";
 import { AuroraGlow } from "./AuroraGlow";
 import { SparkleField } from "./SparkleField";
-import { StarfieldBackground } from "./StarfieldBackground";
 
 export function BackgroundLayer() {
   const prefersReducedMotion = useReducedMotion();
@@ -14,7 +13,6 @@ export function BackgroundLayer() {
       className="pointer-events-none fixed inset-0 z-0 overflow-hidden"
     >
       <AuroraGlow />
-      <StarfieldBackground />
       {prefersReducedMotion ? null : <SparkleField />}
     </div>
   );
