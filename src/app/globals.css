@@ -76,3 +76,21 @@ body {
 @utility bg-gradient-primary {
   background: linear-gradient(135deg, #a855f7 0%, #7c3aed 50%, #c026d3 100%);
 }
+
+/* Lead scraper palette — pastel violet with a mint complement */
+@theme inline {
+  --color-lilac-50: #f8f5ff;
+  --color-lilac-100: #f0eaff;
+  --color-lilac-200: #e3d9ff;
+  --color-lilac-300: #cdbcff;
+  --color-lilac-400: #b59ef7;
+  --color-lilac-500: #9b80ee;
+  --color-lilac-600: #7d5fdc;
+  --color-lilac-700: #5f45b0;
+  --color-ink: #2a2240;
+  --color-ink-soft: #6b6283;
+  --color-mint: #c4f1e2;
+  --color-mint-deep: #2a8a6c;
+  --color-peach: #ffe0cc;
+  --color-peach-deep: #b8622f;
+}
