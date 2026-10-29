@@ -2,7 +2,6 @@
 
 import { useReducedMotion } from "framer-motion";
 import { AuroraGlow } from "./AuroraGlow";
-import { MouseRipple } from "./MouseRipple";
 import { SparkleField } from "./SparkleField";
 import { StarfieldBackground } from "./StarfieldBackground";
 
@@ -16,12 +15,7 @@ export function BackgroundLayer() {
     >
       <AuroraGlow />
       <StarfieldBackground />
-      {prefersReducedMotion ? null : (
-        <>
-          <SparkleField />
-          <MouseRipple />
-        </>
-      )}
+      {prefersReducedMotion ? null : <SparkleField />}
     </div>
   );
 }
