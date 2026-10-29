@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Pill } from "@/components/ui/Pill";
-import { SparkleField } from "@/components/effects/SparkleField";
 
 const container = {
   hidden: {},
@@ -26,20 +25,6 @@ export function HeroOffer() {
       id="hero"
       className="relative isolate flex flex-col items-center px-6 pt-32 pb-16 md:pt-44 md:pb-24 lg:pt-48 lg:pb-32"
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-32 mx-auto h-[420px] max-w-3xl"
-      >
-        <SparkleField
-          mode="absolute"
-          count={14}
-          spawnMin={300}
-          spawnMax={550}
-          sizeMin={6}
-          sizeMax={18}
-        />
-      </div>
-
       <motion.div
         variants={container}
         initial="hidden"
